@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lcc.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="com.lcc.pojo.User"> <!-- "BaseResultMap" -->
+		<id column="Id" property="id" jdbcType="INTEGER" />
+		<result column="UserId" property="userid" jdbcType="VARCHAR" />
+		<result column="UserName" property="username" jdbcType="VARCHAR" />
+		<result column="UPassWord" property="upassword" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		Id, UserId, UserName, UPassWord
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from userinfo
+		where Id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from userinfo
+		where Id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.lcc.pojo.User">
+		insert into userinfo (Id, UserId, UserName,
+		UPassWord)
+		values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR},
+		#{upassword,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.lcc.pojo.User">
+		insert into userinfo
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				Id,
+			</if>
+			<if test="userid != null">
+				UserId,
+			</if>
+			<if test="username != null">
+				UserName,
+			</if>
+			<if test="upassword != null">
+				UPassWord,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userid != null">
+				#{userid,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="upassword != null">
+				#{upassword,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.lcc.pojo.User">
+		update userinfo
+		<set>
+			<if test="userid != null">
+				UserId = #{userid,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				UserName = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="upassword != null">
+				UPassWord = #{upassword,jdbcType=INTEGER},
+			</if>
+		</set>
+		where Id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.lcc.pojo.User">
+		update userinfo
+		set UserId = #{userid,jdbcType=VARCHAR},
+		UserName = #{username,jdbcType=VARCHAR},
+		UPassWord = #{upassword,jdbcType=INTEGER}
+		where Id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
+<!-- <configuration>
+	<typeAliases>
+		<typeAlias alias="com.lcc.pojo.User" type="pojo.User" />
+	</typeAliases>
+	<mapper>
+		<mapper resource="com.lcc.mapping.UserMapper.xml">
+
+	</mapper>
+</configuration> -->
